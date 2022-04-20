@@ -1,27 +1,61 @@
-from os import wait
-import speedtest 
-import time
+import speedtest
 
-test = speedtest.Speedtest()
+def download_speed():
+    test = speedtest.Speedtest()
+    download_result = test.download()
+    return download_result
 
-print("Loading server list...")
-test.get_servers() # get list of servers
-print("Choosing best server...")
-best = test.get_best_server() # choose best servers
+def upload_speed():
+    test = speedtest.Speedtest()
+    upload_result = test.upload()
+    return upload_result
 
-print(f"Found: {best['host']} located in {best['country']}")
+def ping():
+    test = speedtest.Speedtest()
+    ping_result = test.results.ping
+    return ping_result
 
-time.sleep(5)
-print("------------------------------------------------------")
-ping_result = test.results.ping
-print(f"Ping: {ping_result} ms")
-print("------------------------------------------------------")
-download_result = test.download()
-print(f"Download speed: {float(download_result / 1024 / 1024):.2f} Mbps")
-print("------------------------------------------------------")
-upload_result = test.upload()
-print(f"Upload speed: {float(upload_result / 1024 / 1024):.2f} Mbps")
-print("------------------------------------------------------")
+def run():
+    option = int(input("""
+    What speed do you want to test:
+
+    1) Download Speed
+    2) Upload Speed
+    3) Ping
+    4) All
+
+    Your Choice:
+    """))
+
+    if option == 1:
+        print(f"Download speed: {float(download_speed() / 1024 / 1024):.2f} Mbps")
+        print("------------------------------------------------------")
+    elif option == 2:
+        print(f"Upload speed: {float(upload_speed() / 1024 / 1024):.2f} Mbps")
+        print("------------------------------------------------------")
+    elif option == 3:
+        print(f"Ping: {int(ping())} ms")
+        print("------------------------------------------------------")
+    elif option == 4:
+        print(f"Ping: {int(ping())} ms")
+        print("------------------------------------------------------")
+        print(f"Download speed: {float(download_speed()/ 1024 / 1024):.2f} Mbps")
+        print("------------------------------------------------------")
+        print(f"Upload speed: {float(upload_speed() / 1024 / 1024):.2f} Mbps")
+        print("------------------------------------------------------")
+    else:
+        print('Please enter a correct choice !')
+
+
+if __name__ == '__main__':
+    run()
+
+
+
+
+
+
+
 
 
 
